@@ -7,7 +7,7 @@ const babel = require('./');
 
 it('should transpile with Babel', cb => {
 	const stream = babel({
-		plugins: ['@babel/transform-block-scoping']
+		plugins: ['@gerhobbelt/babel-transform-block-scoping']
 	});
 
 	stream.on('data', file => {
@@ -32,7 +32,7 @@ it('should generate source maps', cb => {
 	const write = sourceMaps.write();
 	init
 		.pipe(babel({
-			plugins: ['@babel/transform-arrow-functions']
+			plugins: ['@gerhobbelt/babel-transform-arrow-functions']
 		}))
 		.pipe(write);
 
@@ -61,7 +61,7 @@ it('should generate source maps for file in nested folder', cb => {
 	const write = sourceMaps.write();
 	init
 		.pipe(babel({
-			plugins: ['@babel/transform-arrow-functions']
+			plugins: ['@gerhobbelt/babel-transform-arrow-functions']
 		}))
 		.pipe(write);
 

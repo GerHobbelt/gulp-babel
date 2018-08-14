@@ -4,7 +4,7 @@ const PluginError = require('plugin-error');
 const through = require('through2');
 const applySourceMap = require('vinyl-sourcemaps-apply');
 const replaceExt = require('replace-ext');
-const babel = require('@babel/core');
+const babel = require('@gerhobbelt/babel-core');
 
 function replaceExtension(fp) {
 	return path.extname(fp) ? replaceExt(fp, '.js') : fp;
