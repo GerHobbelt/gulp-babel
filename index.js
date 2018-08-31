@@ -25,7 +25,7 @@ module.exports = function (opts) {
 		}
 
 		if (!supportsCallerOption()) {
-			cb(new PluginError('gulp-babel', '@babel/core@^7.0.0 is required'));
+			cb(new PluginError('gulp-babel', '@gerhobbelt/babel-core@^7.0.0 is required'));
 			return;
 		}
 
@@ -67,7 +67,7 @@ module.exports = function (opts) {
 };
 
 // Note: We can remove this eventually, I'm just adding it so that people have
-// a little time to migrate to the newer RCs of @babel/core without getting
+// a little time to migrate to the newer RCs of @gerhobbelt/babel-core without getting
 // hard-to-diagnose errors about unknown 'caller' options.
 let supportsCallerOptionFlag;
 function supportsCallerOption() {

@@ -1,6 +1,6 @@
 {
   "name": "@gerhobbelt/gulp-babel",
-  "version": "8.0.0-2",
+  "version": "8.0.0-3",
   "description": "Use next generation JavaScript, today",
   "license": "MIT",
   "repository": "babel/gulp-babel",
@@ -13,6 +13,7 @@
   },
   "scripts": {
     "test": "xo && mocha",
+    "test-only": "mocha",
     "pub": "npm publish --access public"
   },
   "pre-commit": {
