@@ -1,6 +1,6 @@
 {
   "name": "@gerhobbelt/gulp-babel",
-  "version": "8.0.0-beta.20001",
+  "version": "8.0.0-2",
   "description": "Use next generation JavaScript, today",
   "license": "MIT",
   "repository": "babel/gulp-babel",
@@ -9,7 +9,7 @@
     "Charles Samborski <demurgos@demurgos.net> (demurgos.net)"
   ],
   "engines": {
-    "node": ">=4"
+    "node": ">=6"
   },
   "scripts": {
     "test": "xo && mocha",
@@ -45,7 +45,7 @@
     "vinyl-sourcemaps-apply": "0.2.1"
   },
   "peerDependencies": {
-    "@gerhobbelt/babel-core": "7 || ^7.0.0-0"
+    "@gerhobbelt/babel-core": "^7.0.0"
   },
   "devDependencies": {
     "@gerhobbelt/babel-core": "7.0.0-beta.530006",
