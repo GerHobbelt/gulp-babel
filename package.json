@@ -46,13 +46,13 @@
     "vinyl-sourcemaps-apply": "0.2.1"
   },
   "peerDependencies": {
-    "@gerhobbelt/babel-core": "^7.0.0"
+    "@gerhobbelt/babel-core": "~7.2.0-0"
   },
   "devDependencies": {
-    "@gerhobbelt/babel-core": "7.0.0-beta.530006",
-    "@gerhobbelt/babel-plugin-transform-arrow-functions": "7.0.0-beta.530006",
-    "@gerhobbelt/babel-plugin-transform-block-scoping": "7.0.0-beta.530006",
-    "@gerhobbelt/babel-plugin-transform-classes": "7.0.0-beta.530006",
+    "@gerhobbelt/babel-core": "7.0.0-6",
+    "@gerhobbelt/babel-plugin-transform-arrow-functions": "7.0.0-6",
+    "@gerhobbelt/babel-plugin-transform-block-scoping": "7.0.0-6",
+    "@gerhobbelt/babel-plugin-transform-classes": "7.0.0-6",
     "gulp-sourcemaps": "2.6.4",
     "mocha": "5.2.0",
     "pre-commit": "1.2.2",
