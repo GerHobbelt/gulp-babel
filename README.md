@@ -10,14 +10,10 @@
 
 ## Install
 
-Install `gulp-babel` if you want to get the pre-release of the next version of `gulp-babel`.
+Install `gulp-babel` using `npm`:
 
 ```
-# Babel 8
 $ npm install --save-dev gulp-babel @babel/core @babel/preset-env
-
-# Babel 7
-$ npm install --save-dev gulp-babel@7 babel-core babel-preset-env
 ```
 
 ## Usage
