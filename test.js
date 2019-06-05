@@ -3,7 +3,7 @@ const path = require('path');
 const assert = require('assert');
 const Vinyl = require('vinyl');
 const sourceMaps = require('gulp-sourcemaps');
-const babel = require('./');
+const babel = require('.');
 
 it('should transpile with Babel', cb => {
 	const stream = babel({
