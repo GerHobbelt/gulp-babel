@@ -79,7 +79,10 @@ module.exports = function (opts) {
 					})
 				);
 			})
-			.then(() => cb(), () => cb());
+			.then(() => cb(), (err) => {
+				console.error(`${err.name}: ${err.code}: ${err.message}`);
+				cb();
+			});
 	});
 };
 
