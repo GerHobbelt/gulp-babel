@@ -7,15 +7,51 @@ const babel = require('.');
 
 it('should transpile with Babel', cb => {
 	const stream = babel({
-		plugins: ['transform-block-scoping']
+		plugins: ['@gerhobbelt/babel-plugin-transform-block-scoping']
 	});
+	let collectedData = '';
 
 	stream.on('data', file => {
 		assert(/var foo/.test(file.contents.toString()), file.contents.toString());
 		assert.strictEqual(file.relative, 'fixture.js');
+		collectedData += file.contents.toString();
 	});
 
-	stream.on('end', cb);
+	stream.on('end', () => {
+		assert(collectedData.length > 0);
+		cb();
+	});
+
+	stream.write(
+		new Vinyl({
+			cwd: __dirname,
+			base: path.join(__dirname, 'fixture'),
+			path: path.join(__dirname, 'fixture/fixture.jsx'),
+			contents: Buffer.from('let foo;')
+		})
+	);
+
+	stream.end();
+});
+
+it('should barf a hairball when babel config is wrong (plugins)', cb => {
+	const stream = babel({
+		plugins: ['transform-block-scoping']
+	});
+	let hitCount = 0;
+
+	stream.on('data', file => {
+	});
+
+	stream.on('error', err => {
+		assert(err.message.indexOf('Cannot find module') >= 0, `Unexpected error: ${err.message}`);
+		hitCount++;
+	});
+
+	stream.on('end', () => {
+		assert(hitCount > 0);
+		cb();
+	});
 
 	stream.write(
 		new Vinyl({
@@ -35,19 +71,25 @@ it('should generate source maps', cb => {
 	init
 		.pipe(
 			babel({
-				plugins: ['transform-arrow-functions']
+				plugins: ['@gerhobbelt/babel-plugin-transform-arrow-functions']
 			})
 		)
 		.pipe(write);
 
 	write.on('data', file => {
-		assert.deepStrictEqual(file.sourceMap.sources, ['fixture.es2015']);
 		assert.strictEqual(file.sourceMap.file, 'fixture.js');
 		const contents = file.contents.toString();
 		assert(/function/.test(contents));
 		assert(/sourceMappingURL/.test(contents));
-		cb();
+		assert.deepStrictEqual(file.sourceMap.sources, ['fixture.es2015']);
 	});
+
+	write.on('error', err => {
+		console.error(err);
+		assert.fail(`Unexpected error: ${err.message}`);
+	});
+
+	write.on('end', cb);
 
 	init.write(
 		new Vinyl({
@@ -68,19 +110,25 @@ it('should generate source maps for file in nested folder', cb => {
 	init
 		.pipe(
 			babel({
-				plugins: ['transform-arrow-functions']
+				plugins: ['@gerhobbelt/babel-plugin-transform-arrow-functions']
 			})
 		)
 		.pipe(write);
 
 	write.on('data', file => {
-		assert.deepStrictEqual(file.sourceMap.sources, ['nested/fixture.es2015']);
 		assert.strictEqual(file.sourceMap.file, 'nested/fixture.js');
 		const contents = file.contents.toString();
 		assert(/function/.test(contents));
 		assert(/sourceMappingURL/.test(contents));
-		cb();
+		assert.deepStrictEqual(file.sourceMap.sources, ['nested/fixture.es2015']);
 	});
+
+	write.on('error', err => {
+		console.error(err);
+		assert.fail(`Unexpected error: ${err.message}`);
+	});
+
+	write.on('end', cb);
 
 	init.write(
 		new Vinyl({
