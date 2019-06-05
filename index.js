@@ -25,57 +25,61 @@ module.exports = function (opts) {
 		}
 
 		if (!supportsCallerOption()) {
-			cb(new PluginError('gulp-babel', '@gerhobbelt/babel-core@^7.0.0 is required'));
+			cb(
+				new PluginError(
+					'gulp-babel',
+					'@gerhobbelt/babel-core@^7.0.0 is required'
+				)
+			);
 			return;
 		}
-    
-    
-    const isInputSourceMapPresent = Boolean(file.sourceMap);
+
+		const isInputSourceMapPresent = Boolean(file.sourceMap);
 		const defaultOpts = {
 			filename: file.path,
 			filenameRelative: file.relative,
-      caller: Object.assign(
-				{name: 'babel-gulp'},
-				opts.caller
-			)
+			caller: Object.assign({name: 'babel-gulp'}, opts.caller)
 		};
 
 		if (isInputSourceMapPresent) {
 			defaultOpts.inputSourceMap = file.sourceMap;
-		}
-		else {
+		} else {
 			defaultOpts.sourceFileName = file.relative;
 		}
 
-		const fileOpts = objectAssign({}, opts, defaultOpts);
+		const fileOpts = Object.assign({}, opts, defaultOpts);
 
-		babel.transformAsync(file.contents.toString(), fileOpts).then(res => {
-			if (res) {
-        if (file.sourceMap && res.map) {
-				  if (isInputSourceMapPresent) {
-					  file.sourceMap = res.map;
-				  } else {
-					  res.map.file = replaceExtension(file.relative);
-					  applySourceMap(file, res.map);
-				  }
-			  }
+		babel
+			.transformAsync(file.contents.toString(), fileOpts)
+			.then(res => {
+				if (res) {
+					if (file.sourceMap && res.map) {
+						if (isInputSourceMapPresent) {
+							file.sourceMap = res.map;
+						} else {
+							res.map.file = replaceExtension(file.relative);
+							applySourceMap(file, res.map);
+						}
+					}
 
-				file.contents = Buffer.from(res.code);
-				file.path = replaceExtension(file.path);
+					file.contents = Buffer.from(res.code);
+					file.path = replaceExtension(file.path);
 
-				file.babel = res.metadata;
-			}
+					file.babel = res.metadata;
+				}
 
-			this.push(file);
-		}).catch(error => {
-			this.emit('error', new PluginError('gulp-babel', error, {
-				fileName: file.path,
-				showProperties: false
-			}));
-		}).then(
-			() => cb(),
-			() => cb()
-		);
+				this.push(file);
+			})
+			.catch(error => {
+				this.emit(
+					'error',
+					new PluginError('gulp-babel', error, {
+						fileName: file.path,
+						showProperties: false
+					})
+				);
+			})
+			.then(() => cb(), () => cb());
 	});
 };
 
@@ -112,4 +116,3 @@ module.exports.logError = function (error) {
 	process.stderr.write(error.toString() + '\n' + error.codeFrame + '\n');
 	this.emit('end');
 };
-

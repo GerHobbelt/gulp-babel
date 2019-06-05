@@ -12,8 +12,12 @@
     "node": ">=6"
   },
   "scripts": {
+    "build": "npm run lint && npm test",
     "test": "xo && mocha",
     "test-only": "mocha",
+    "lint": "xo",
+    "fix": "xo --fix",
+    "prettier": "prettier --write *.js && xo --fix",
     "pub": "npm publish --access public"
   },
   "pre-commit": {
@@ -46,7 +50,7 @@
     "vinyl-sourcemaps-apply": "0.2.1"
   },
   "peerDependencies": {
-    "@gerhobbelt/babel-core": "~7.2.0-0"
+    "@gerhobbelt/babel-core": "~7.2.1-26"
   },
   "devDependencies": {
     "@gerhobbelt/babel-core": "7.2.1-26",
@@ -56,6 +60,7 @@
     "gulp-sourcemaps": "2.6.5",
     "mocha": "6.1.4",
     "pre-commit": "1.2.2",
+    "prettier": "1.17.1",
     "vinyl": "2.2.0",
     "xo": "0.24.0"
   },

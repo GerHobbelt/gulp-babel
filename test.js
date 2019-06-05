@@ -17,12 +17,14 @@ it('should transpile with Babel', cb => {
 
 	stream.on('end', cb);
 
-	stream.write(new Vinyl({
-		cwd: __dirname,
-		base: path.join(__dirname, 'fixture'),
-		path: path.join(__dirname, 'fixture/fixture.jsx'),
-		contents: Buffer.from('let foo;')
-	}));
+	stream.write(
+		new Vinyl({
+			cwd: __dirname,
+			base: path.join(__dirname, 'fixture'),
+			path: path.join(__dirname, 'fixture/fixture.jsx'),
+			contents: Buffer.from('let foo;')
+		})
+	);
 
 	stream.end();
 });
@@ -31,9 +33,11 @@ it('should generate source maps', cb => {
 	const init = sourceMaps.init();
 	const write = sourceMaps.write();
 	init
-		.pipe(babel({
-			plugins: ['transform-arrow-functions']
-		}))
+		.pipe(
+			babel({
+				plugins: ['transform-arrow-functions']
+			})
+		)
 		.pipe(write);
 
 	write.on('data', file => {
@@ -45,13 +49,15 @@ it('should generate source maps', cb => {
 		cb();
 	});
 
-	init.write(new Vinyl({
-		cwd: __dirname,
-		base: path.join(__dirname, 'fixture'),
-		path: path.join(__dirname, 'fixture/fixture.es2015'),
-		contents: Buffer.from('[].map(v => v + 1)'),
-		sourceMap: ''
-	}));
+	init.write(
+		new Vinyl({
+			cwd: __dirname,
+			base: path.join(__dirname, 'fixture'),
+			path: path.join(__dirname, 'fixture/fixture.es2015'),
+			contents: Buffer.from('[].map(v => v + 1)'),
+			sourceMap: ''
+		})
+	);
 
 	init.end();
 });
@@ -60,9 +66,11 @@ it('should generate source maps for file in nested folder', cb => {
 	const init = sourceMaps.init();
 	const write = sourceMaps.write();
 	init
-		.pipe(babel({
-			plugins: ['transform-arrow-functions']
-		}))
+		.pipe(
+			babel({
+				plugins: ['transform-arrow-functions']
+			})
+		)
 		.pipe(write);
 
 	write.on('data', file => {
@@ -74,24 +82,28 @@ it('should generate source maps for file in nested folder', cb => {
 		cb();
 	});
 
-	init.write(new Vinyl({
-		cwd: __dirname,
-		base: path.join(__dirname, 'fixture'),
-		path: path.join(__dirname, 'fixture/nested/fixture.es2015'),
-		contents: Buffer.from('[].map(v => v + 1)'),
-		sourceMap: ''
-	}));
+	init.write(
+		new Vinyl({
+			cwd: __dirname,
+			base: path.join(__dirname, 'fixture'),
+			path: path.join(__dirname, 'fixture/nested/fixture.es2015'),
+			contents: Buffer.from('[].map(v => v + 1)'),
+			sourceMap: ''
+		})
+	);
 
 	init.end();
 });
 
 it('should pass the result of transform().metadata in file.babel', cb => {
 	const stream = babel({
-		plugins: [{
-			post(file) {
-				file.metadata.test = 'metadata';
+		plugins: [
+			{
+				post(file) {
+					file.metadata.test = 'metadata';
+				}
 			}
-		}]
+		]
 	});
 
 	stream.on('data', file => {
@@ -100,12 +112,14 @@ it('should pass the result of transform().metadata in file.babel', cb => {
 
 	stream.on('end', cb);
 
-	stream.write(new Vinyl({
-		cwd: __dirname,
-		base: path.join(__dirname, 'fixture'),
-		path: path.join(__dirname, 'fixture/fixture.js'),
-		contents: Buffer.from('class MyClass {};')
-	}));
+	stream.write(
+		new Vinyl({
+			cwd: __dirname,
+			base: path.join(__dirname, 'fixture'),
+			path: path.join(__dirname, 'fixture/fixture.js'),
+			contents: Buffer.from('class MyClass {};')
+		})
+	);
 
 	stream.end();
 });
